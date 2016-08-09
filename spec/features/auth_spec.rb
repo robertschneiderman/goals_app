@@ -41,7 +41,6 @@ feature "logging in" do
     fill_in 'Username', :with => "testing_username"
     fill_in 'Password', :with => "valid_password"
     click_on "Sign In"
-    save_and_open_page
     expect(page).to have_content("Logged in as testing_username")
   end
 

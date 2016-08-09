@@ -31,6 +31,10 @@ RSpec.configure do |config|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
+  config.after :all do
+    ActiveRecord::Base.subclasses.each(&:delete_all)
+  end
+
   # rspec-mocks config goes here. You can use an alternate test double
   # library (such as bogus or mocha) by changing the `mock_with` option here.
   config.mock_with :rspec do |mocks|
@@ -96,4 +100,22 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+end
+
+def sign_up(username)
+  visit new_user_path
+  fill_in "Username", with: username
+  fill_in "Password", with: 'abcdef'
+  click_button 'Create User'
+end
+
+def sign_up_as_ginger_baker
+  sign_up("ginger_baker")
+end
+
+def sign_in(username)
+  visit new_session_path
+  fill_in "Username", with: username
+  fill_in "Password", with: 'abcdef'
+  click_button 'Sign In'
 end

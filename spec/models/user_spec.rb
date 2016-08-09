@@ -14,18 +14,27 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  it { should validate_presence_of(:username) }
-  it { should validate_presence_of(:password_digest) }
-  it { should validate_presence_of(:session_token) }
-
-  describe "validates new users" do
-    it "checks if a password is valid" do
-      expect(FactoryGirl.build(:user, password: "short")).not_to be_valid
-    end
-
-    it "checks if all parameters are valid" do
-      expect(FactoryGirl.build(:user)).to be_valid
-    end
+  describe "validations" do
+    it { should validate_presence_of(:username) }
+    it { should validate_presence_of(:password_digest) }
+    it { should validate_presence_of(:session_token) }
   end
 
+  describe "associations" do
+    it { should have_many(:goals) }
+  end
+
+  describe "validates new users" do
+    context "with invalid params" do
+      it "invalidates users" do
+        expect(FactoryGirl.build(:user, password: "short")).not_to be_valid
+      end
+    end
+
+    context "with valid params" do
+      it "saves creates a valid user" do
+        expect(FactoryGirl.build(:user)).to be_valid
+      end
+    end
+  end
 end

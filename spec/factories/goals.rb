@@ -17,7 +17,7 @@ FactoryGirl.define do
     user_id 1
     title { Faker::Company.catch_phrase }
     description { Faker::Hipster.sentence(12) }
-    privacy false
-    completed false
+    privacy {false}
+    completed {false}
   end
 end
